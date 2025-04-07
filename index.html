@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Storefront</title>
+  <title>Storefront</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- 🌐 Navbar -->
+  <!-- navbar -->
   <header class="navbar">
-    <h1>My Storefront</h1>
+    <h1>Storefront</h1>
     <input type="text" id="searchInput" placeholder="Search products..." />
   </header>
 
-  <!-- 🔍 Filters & Sorting -->
+  <!-- filters & sorting -->
   <section class="filters">
     <select id="categoryFilter">
       <option value="">All Categories</option>
-      <!-- Filled dynamically -->
+      <!-- filled dynamically -->
     </select>
 
     <select id="sortSelect">
@@ -27,24 +27,35 @@
     </select>
   </section>
 
-  <!-- 🛍️ Product Grid -->
+  <!-- products in grid layout -->
   <main class="product-grid" id="productGrid">
     <!-- Product cards injected here -->
   </main>
 
-  <!-- 🧺 Cart Section -->
+  <!-- cart section -->
   <aside class="cart" id="cart">
+    
     <h2>Cart</h2>
     <div id="cartItems"></div>
     <p id="totalPrice">Total: ₹0</p>
     
-    <!-- ❌ Clear Cart button -->
+    <!-- clear cart button -->
     <button onclick="clearCart()" id="clearCartBtn">Clear Cart</button>
 
-    <!-- ✅ Checkout Button -->
+    <!-- checkout button -->
     <button id="checkoutBtn">Checkout</button>
   </aside>
 
+  <!-- checkout model -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Order Summary</h2>
+      <p id="checkoutTotal"></p>
+      <button onclick="confirmCheckout()">Confirm Purchase</button>
+    </div>
+  </div>
+  
   <script src="app.js"></script>
 </body>
 </html>

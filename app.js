@@ -1,40 +1,30 @@
-// 🧪 Mock product data (simulate backend API)
-const products = [
-    {
-      id: 1,
-      name: "Coffee",
-      category: "Beverages",
-      image_url: "https://via.placeholder.com/150",
-      varieties: [
-        { id: 101, name: "Small", price: 50 },
-        { id: 102, name: "Medium", price: 100 },
-        { id: 103, name: "Large", price: 150 }
-      ]
-    },
-    {
-      id: 2,
-      name: "T-Shirt",
-      category: "Clothing",
-      image_url: "https://via.placeholder.com/150",
-      varieties: [
-        { id: 201, name: "Small", price: 300 },
-        { id: 202, name: "Medium", price: 350 },
-        { id: 203, name: "Large", price: 400 }
-      ]
-    }
-  ];
+let products = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("http://localhost:8000/products.php")
+    .then(res => res.json())
+    .then(data => {
+      products = data;
+      renderProducts(products);
+      populateCategoryFilter(products);
+      renderCart();
+    })
+    .catch(err => console.error("Failed to load products:", err));
+});
+
+
   
-  // 🛒 Cart setup (persistent)
+  // cart setup
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   
-  // 🔁 Initialize UI
+  // initiialize UI
   document.addEventListener("DOMContentLoaded", () => {
     renderProducts(products);
     populateCategoryFilter(products);
     renderCart();
   });
   
-  // 🧩 Category filter dropdown
+  // category filter dropdown
   function populateCategoryFilter(products) {
     const categoryFilter = document.getElementById("categoryFilter");
     const categories = [...new Set(products.map(p => p.category))];
@@ -47,7 +37,7 @@ const products = [
     });
   }
   
-  // 🖼️ Render product cards
+  // render product cards
   function renderProducts(data) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
@@ -74,7 +64,7 @@ const products = [
     });
   }
   
-  // 🛒 Add item to cart
+  // add item to cart
   function addToCart(productId, buttonElement) {
     const product = products.find(p => p.id === productId);
     const card = buttonElement.closest(".product-card");
@@ -100,13 +90,21 @@ const products = [
     updateCart();
   }
   
-  // 🧾 Render cart items
+  // render cart items
   function renderCart() {
     const cartItemsContainer = document.getElementById("cartItems");
     const totalPriceElement = document.getElementById("totalPrice");
+    const cartElement = document.getElementById("cart");
   
     cartItemsContainer.innerHTML = "";
     let total = 0;
+  
+    if (cart.length === 0) {
+      cartElement.style.display = "none";
+      return;
+    } else {
+      cartElement.style.display = "block";
+    }
   
     cart.forEach((item, index) => {
       const itemTotal = item.price * item.quantity;
@@ -116,9 +114,13 @@ const products = [
       div.className = "cart-item";
   
       div.innerHTML = `
-        <span>${item.name} (${item.variety}) x${item.quantity}</span>
+        <span>${item.name} (${item.variety})</span>
+        <div class="qty-controls">
+          <button onclick="decreaseQty(${index})">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="increaseQty(${index})">+</button>
+        </div>
         <span>₹${itemTotal}</span>
-        <button onclick="removeItem(${index})" class="remove-btn">✖</button>
       `;
   
       cartItemsContainer.appendChild(div);
@@ -128,8 +130,61 @@ const products = [
   }
   
   
-
+  document.getElementById("checkoutBtn").addEventListener("click", checkout);
+  
+  
+  function checkout() {
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    document.getElementById("checkoutTotal").textContent = `Total amount: ₹${total}`;
+    document.getElementById("checkoutModal").style.display = "flex";
+  }
+  function confirmCheckout() {
+    fetch("http://localhost:8000/checkout.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cart }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(`Thank you! Your order has been placed.\nOrder ID: ${data.order_id}`);
+          clearCart();
+          document.getElementById("checkoutModal").style.display = "none";
+        } else {
+          alert("Checkout failed: " + data.message);
+        }
+      })
+      .catch(err => {
+        alert("Checkout failed. Please try again.");
+        console.error(err);
+      });
+  }
+  
+  
+  document.getElementById("closeModal").onclick = function () {
+    document.getElementById("checkoutModal").style.display = "none";
+  };
+  
+  
+  function closeCart() {
+    document.getElementById('cart').classList.remove('active');
+  }
+  
   function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  function clearCart() {
+    cart = [];
+    updateCart();
+  }
+  function increaseQty(index) {
+    cart[index].quantity += 1;
+    updateCart();
+  }
+  
+  function decreaseQty(index) {
     if (cart[index].quantity > 1) {
       cart[index].quantity -= 1;
     } else {
@@ -138,35 +193,29 @@ const products = [
     updateCart();
   }
   
-
-  function clearCart() {
-    cart = [];
-    updateCart();
-  }
   
-  
-  // 💾 Save and render cart
+  // save and render cart
   function updateCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
   }
   
-  // 🔍 Search input
+  // search input
   document.getElementById("searchInput").addEventListener("input", () => {
     applyFilters();
   });
   
-  // 📂 Category filter change
+  // category filter change
   document.getElementById("categoryFilter").addEventListener("change", () => {
     applyFilters();
   });
   
-  // ⬇️ Sorting option change
+  // sorting option change
   document.getElementById("sortSelect").addEventListener("change", () => {
     applyFilters();
   });
   
-  // 🔄 Apply all filters and sorting
+  // apply all filters and sorting
   function applyFilters() {
     const searchValue = document.getElementById("searchInput").value.toLowerCase();
     const selectedCategory = document.getElementById("categoryFilter").value;

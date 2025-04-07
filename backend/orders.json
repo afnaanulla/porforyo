@@ -1,0 +1,15 @@
+[
+    {
+        "order_id": "order_67f3dff5ab037",
+        "timestamp": "2025-04-07 14:23:49",
+        "cart": [
+            {
+                "key": "3_301",
+                "name": "Coca cola",
+                "variety": "Small",
+                "price": 30,
+                "quantity": 1
+            }
+        ]
+    }
+]

@@ -1,21 +1,17 @@
-/* General Styles */
-* {
+*{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-  }
-  
-  body {
+}
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background: #f9f9f9;
     padding: 1rem;
-  }
-  
-  /* Navbar */
-  .navbar {
+}
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,43 +20,35 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin-bottom: 1rem;
-  }
-  
-  .navbar h1 {
+} 
+.navbar h1 {
     font-size: 1.5rem;
     color: #333;
-  }
-  
-  .navbar input {
+}
+.navbar input {
     padding: 0.5rem 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     width: 200px;
-  }
-  
-  /* Filters */
-  .filters {
+}
+.filters {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-  }
+}
   
-  .filters select {
+.filters select {
     padding: 0.5rem;
     border-radius: 8px;
     border: 1px solid #ccc;
-  }
-  
-  /* Product Grid */
-  .product-grid {
+}
+.product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
     flex: 1;
-  }
-  
-  /* Product Card */
-  .product-card {
+}
+.product-card {
     background: #ffffff;
     padding: 1rem;
     border-radius: 12px;
@@ -69,26 +57,24 @@
     flex-direction: column;
     gap: 0.5rem;
     transition: transform 0.2s ease;
-  }
-  
-  .product-card:hover {
+}
+.product-card:hover {
     transform: translateY(-5px);
-  }
-  
-  .product-card img {
+}
+.product-card img {
     width: 100%;
     height: 150px;
     object-fit: cover;
     border-radius: 8px;
-  }
+}
   
-  .product-card select {
+.product-card select {
     padding: 0.4rem;
     border-radius: 8px;
     border: 1px solid #ddd;
-  }
+}
   
-  .product-card button {
+.product-card button {
     background: #3a86ff;
     color: #fff;
     padding: 0.6rem;
@@ -96,14 +82,12 @@
     border-radius: 8px;
     cursor: pointer;
     margin-top: auto;
-  }
+}
   
-  .product-card button:hover {
+.product-card button:hover {
     background: #265dd9;
-  }
-  
-  /* Cart */
-  .cart {
+}
+.cart {
     position: fixed;
     right: 1rem;
     top: 5rem;
@@ -112,22 +96,22 @@
     border-radius: 12px;
     padding: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-height: 80vh;
+    max-height: 50vh;
     overflow-y: auto;
-  }
+}
   
-  .cart h2 {
+.cart h2 {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-  }
+}
   
-  .cart-item {
+.cart-item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-  }
+}
   
-  .cart button {
+.cart button {
     width: 100%;
     margin-top: 1rem;
     background: #06d6a0;
@@ -136,32 +120,44 @@
     padding: 0.6rem;
     border-radius: 8px;
     cursor: pointer;
-  }
+}
   
-  .cart button:hover {
+.cart button:hover {
     background: #05b384;
-  }
+}
   
-  /* Responsive */
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
+    .close-cart-btn {
+      display: block;
+    }
+}
+@media (max-width: 768px) {
+    #cart {
+      width: 100%;
+      max-width: none;
+      top: 0;
+      border-radius: 0;
+      border-left: none;
+      border-top: 1px solid #ccc;
+    }
+}
+@media (max-width: 768px) {
     .filters {
       flex-direction: column;
-    }
-  
+    }  
     .navbar {
       flex-direction: column;
       gap: 1rem;
     }
-  
     .cart {
       position: static;
       width: 100%;
       margin-top: 2rem;
     }
-  }
+}
 
   
-  .remove-btn {
+.remove-btn {
     margin-left: 10px;
     background: red;
     color: white;
@@ -170,4 +166,67 @@
     padding: 2px 6px;
     cursor: pointer;
   }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+  
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    width: 300px;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+  
+.close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    cursor: pointer;
+}
+  
+.qty-controls {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    margin-right: 8px;
+}
+  
+.qty-controls button {
+    padding: 2px 6px;
+    font-weight: bold;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    #cart {
+      width: 80%;
+      max-width: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      background: white;
+      border-left: none;
+      border-top: 1px solid #ccc;
+    }
+}
   
