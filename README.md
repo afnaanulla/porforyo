@@ -21,7 +21,7 @@ A basic e-commerce storefront built for the intern test using:
 ---
 
 ## 🗂️ Folder Structure
-
+```
 storefront/
 ├── backend/
 │   ├── products.php         # Returns product data as JSON
@@ -33,7 +33,7 @@ storefront/
 │   └── app.js               # JavaScript logic (render, cart, checkout)
 ├── README.md                # Project overview and instructions
 ---
-
+```
 ## 💻 Getting Started
 
 ### Requirements
