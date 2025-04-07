@@ -32,9 +32,6 @@ storefront/
 │   ├── styles.css           # All styles
 │   └── app.js               # JavaScript logic (render, cart, checkout)
 ├── README.md                # Project overview and instructions
-
-
-
 ---
 
 ## 💻 Getting Started
