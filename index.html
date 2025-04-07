@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Storefront</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 🌐 Navbar -->
+  <header class="navbar">
+    <h1>My Storefront</h1>
+    <input type="text" id="searchInput" placeholder="Search products..." />
+  </header>
+
+  <!-- 🔍 Filters & Sorting -->
+  <section class="filters">
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+      <!-- Filled dynamically -->
+    </select>
+
+    <select id="sortSelect">
+      <option value="">Sort by</option>
+      <option value="lowToHigh">Price: Low to High</option>
+      <option value="highToLow">Price: High to Low</option>
+    </select>
+  </section>
+
+  <!-- 🛍️ Product Grid -->
+  <main class="product-grid" id="productGrid">
+    <!-- Product cards injected here -->
+  </main>
+
+  <!-- 🧺 Cart Section -->
+  <aside class="cart" id="cart">
+    <h2>Cart</h2>
+    <div id="cartItems"></div>
+    <p id="totalPrice">Total: ₹0</p>
+    
+    <!-- ❌ Clear Cart button -->
+    <button onclick="clearCart()" id="clearCartBtn">Clear Cart</button>
+
+    <!-- ✅ Checkout Button -->
+    <button id="checkoutBtn">Checkout</button>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
